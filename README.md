@@ -12,3 +12,4 @@ Deploy will be from master branch directly to firestore
 3) firebase init functions
 4) uncomment in functions/src/index.ts so that the test can run
 5) firebase deploy --only functions
+6) change package.json node engine from 8 to 10 "node": "10"
