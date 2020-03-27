@@ -20,3 +20,12 @@ Deploy will be from master branch directly to firestore
 7c) You should see commits from github here https://source.cloud.google.com/urbalurbaapi/github_terchris_urbalurbaapi
 7d) Enable cloud build https://console.cloud.google.com/cloud-build/triggers?project=urbalurbaapi
 7e) Add "Cloud Functions Develop.." https://console.cloud.google.com/cloud-build/settings/service-account?project=urbalurbaapi
+SHIT - cant figure out how to deploy the function(s)
+
+Will just have to use the local deploy until I can figure out how the deploy works.
+
+8) npm install firebase-admin --save
+9) set up for creating APIs 
+https://itnext.io/building-a-serverless-restful-api-with-cloud-functions-firestore-and-express-f917a305d4e6
+9a) in functions dir do 
+npm install --save express body-parser firebase-functions-helper

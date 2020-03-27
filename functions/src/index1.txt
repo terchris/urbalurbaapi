@@ -1,0 +1,66 @@
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
+import * as firebaseHelper from 'firebase-functions-helper/dist';
+import * as express from 'express';
+//import * as bodyParser from "body-parser";
+
+
+//import { catalog_category } from './datastore/datastoreinit';
+
+
+/** system spessific code */
+//import * as categoryStuff from './category/category';
+//export const getOneCategory = categoryStuff.getOneCategory;
+
+
+
+// Start init stuff
+//admin.initializeApp(functions.config().firebase);
+//const db = admin.firestore();
+
+const app = express();
+//const main = express();
+
+//main.use('/api/v1', app);
+//main.use(bodyParser.json());
+//main.use(bodyParser.urlencoded({ extended: false }));
+// webApi is your functions name, and you will pass main as 
+// a parameter
+//export const webApi = functions.https.onRequest(main);
+
+// End init stuff
+
+
+// View one category
+/*
+app.get('/category/:idName', (req, res) => {
+  const idName = req.params.idName;
+
+  // Search for data ( <, <=, ==, >, or >= )
+  const queryArray = [['idName', '==', idName]];
+
+  firebaseHelper.firestore
+    .queryData(db, catalog_category, queryArray)
+    .then(docs => res.status(200).send(docs))
+    .catch(error => res.status(400).send(`Cannot get category: ${error}`));
+})
+
+
+// View one category
+app.get('/jalla', (req, res) => {
+ res.status(200).send("hallo jalla");
+})
+
+
+*/
+
+
+
+// // Start writing Firebase Functions
+// // https://firebase.google.com/docs/functions/typescript
+//
+export const helloWorld = functions.https.onRequest((request, response) => {
+  response.send("Hello from github?? Firebase! - node 10");
+});
+
+
