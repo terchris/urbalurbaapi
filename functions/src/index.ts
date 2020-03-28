@@ -11,6 +11,7 @@ export const getOneCategory = categoryStuff.getOneCategory;
 export const getAllCategories = categoryStuff.getAllCategories;
 
 import {getStoredEntry, getAllEntries, getPopulatedEntry, getAllCategoryEntries } from './entry/entry';
+import {getOneNetwork, getAllNetworks,} from './network/network';
 
 exports.api = functions.https.onRequest(api);
 
@@ -24,7 +25,7 @@ api.get('/', (req, res) => {
       </head>
       <body>
       <h1>API for urbalurba</h1>
-      <p>Running on google functions</p>
+      <p>Running on google functions :)</p>
       <ul>
             <li>Get all categories /categories</li>
             <li>Get one category /category/<categoryname> eg /category/segment</li>
@@ -32,6 +33,8 @@ api.get('/', (req, res) => {
             <li>Get all entries /entries/</li>
             <li>Get one entry and populate it /entry/<entryId> eg /entry/sintef</li>
             <li>Get all entries in a category /categoryentries/<caregory>/<categoryItem> eg /categoryentries/sdg/11</li>
+            <li>Get all networks /networks</li>
+            <li>Get one network /network/<networkname> eg /network/sbn</li>            
       </ul>  
 
         <p> There are no error checking implemented. So a query for a nonexisting record will crash</p>
@@ -42,7 +45,6 @@ api.get('/', (req, res) => {
 
 // Get all categories
 api.get('/categories', (req, res) => {
-    const idName = req.params.idName;
     console.info("categories getting all catagories");
 
   const theRecord = getAllCategories()
@@ -143,6 +145,38 @@ api.get('/categoryentries/:category/:categoryItem', (req, res) => {
     console.log('Error getting documents', err);
   });
   
+})
+
+// Get all networks
+api.get('/networks', (req, res) => {
+  console.info("networks getting all networks");
+
+const theRecord = getAllNetworks()
+.then (returnedRecord => {
+  //console.log(returnedRecord);
+  res.status(200).send(returnedRecord);    
+})
+.catch(err => {
+//TODO: handle error      
+  console.log('Error getting documents', err);
+});
+
+})
+
+// Get one category
+api.get('/network/:idName', (req, res) => {
+  const idName = req.params.idName;
+  console.log("network idName=", idName);
+const theRecord = getOneNetwork(idName)
+.then (returnedRecord => {
+  //console.log(returnedRecord);
+  res.status(200).send(returnedRecord);    
+})
+.catch(err => {
+//TODO: handle error      
+  console.log('Error getting documents', err);
+});
+
 })
 
 

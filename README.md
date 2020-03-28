@@ -29,3 +29,8 @@ Will just have to use the local deploy until I can figure out how the deploy wor
 https://itnext.io/building-a-serverless-restful-api-with-cloud-functions-firestore-and-express-f917a305d4e6
 9a) in functions dir do 
 npm install --save express body-parser firebase-functions-helper
+
+
+debugging:
+npm run build
+firebase emulators:start

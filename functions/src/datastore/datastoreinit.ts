@@ -12,6 +12,8 @@ export const db = admin.firestore();
 /** Global constants */
 export const catalog_category = 'catalog_category';
 export const catalog_entry = 'catalog_entry';
+export const catalog_network = 'catalog_network';
+
 
 /* delete
 export const backend_input = 'backend_input';
