@@ -231,9 +231,10 @@ export async function populateEntryCategories(theEntry) {
      
       let categoryKeys = [] as any; //for storing the keys
 
-      //Two types of values can be stored. Just an array of strings or key value pairs
+      //Tree types of values can be stored. Just an array of strings, key value pairs, tag
       //figure out if the categoryName array of strings like this eg:  "sdg": [ "11","13"]
       //or if it is key value pairs like this eg:  {"expected":"some txt","measured":"Ikke utført ennå."}
+      //or if it is a tag - then there are no definition
 
       if( Array.isArray(categoryItems))
       {
@@ -266,26 +267,47 @@ export async function populateEntryCategories(theEntry) {
 
               console.log("entry/populateEntryCategories newCategoryRecord ", JSON.stringify(newCategoryRecord));
               //so back to looping the stored values
-              categoryKeys.map(currentCategoryKey => { //find the record for each key
-                  //console.log("LIB/populateEntryCategories currentCategoryKey ", JSON.stringify(currentCategoryKey));
-                  //console.log("LIB/populateEntryCategories categoryRecord.categoryItems ", JSON.stringify(categoryRecord.categoryItems));
-                  theCategoryItem = categoryRecord.categoryItems.find(categoryItemName => categoryItemName.idName == currentCategoryKey);
-                  //console.log("LIB/populateEntryCategories theCategoryItem ", JSON.stringify(theCategoryItem));
-                  if (typeof theCategoryItem != "undefined") { //we got a category
 
-                      // if currentCategoryName is key value pairs
-                      if( ! Array.isArray(categoryItems)) {
-                          theCategoryItem.value = categoryItems[currentCategoryKey];
-                          //console.log("LIB/populateEntryCategories value--> ", theCategoryItem.value);
-                      }    
-                      // copy the categoryItem to the newCategoryRecord
+
+
+                categoryKeys.map(currentCategoryKey => { //find the record for each key
+                    //console.log("LIB/populateEntryCategories currentCategoryKey ", JSON.stringify(currentCategoryKey));
+                    //console.log("LIB/populateEntryCategories categoryRecord.categoryItems ", JSON.stringify(categoryRecord.categoryItems));
+                    //IF the categorytype is "tag" then there are no definitions for the categoryItems
+                    if (newCategoryRecord.categorytype === "tag") { //if it is a "tag" then we will copy the values from the category to category to all categoryItems
+                    theCategoryItem = {
+                        "sortOrder": 0,
+                        "summary": currentCategoryKey,
+                        "idName": currentCategoryKey,
+                        "displayName": currentCategoryKey,
+                        "description": currentCategoryKey,
+                        "image": categoryRecord.image,
+                        "color": categoryRecord.color
+                      };
+//TODO:displayName and description can be converted back to the initial tag text eg sace was replaced with _ and å is aa and ø is oe and æ is ae
                       newCategoryRecord.categoryItems.push(theCategoryItem);
-                      
-                      //console.log("LIB/populateEntryCategories newCategoryRecord ", JSON.stringify(newCategoryRecord));
-                  } else
-                      console.log("integrety Error! No category item for currentCategoryKey ", currentCategoryKey)
+                    }
+                    else // since it is not a "tag" we can find the definitions and populate 
+                    {
+                      theCategoryItem = categoryRecord.categoryItems.find(categoryItemName => categoryItemName.idName == currentCategoryKey);
+                      //console.log("LIB/populateEntryCategories theCategoryItem ", JSON.stringify(theCategoryItem));
+                      if (typeof theCategoryItem != "undefined") { //we got a category
 
-              });
+                          // if currentCategoryName is key value pairs
+                          if( ! Array.isArray(categoryItems)) {
+                              theCategoryItem.value = categoryItems[currentCategoryKey];
+                              //console.log("LIB/populateEntryCategories value--> ", theCategoryItem.value);
+                          }    
+                          // copy the categoryItem to the newCategoryRecord
+                          newCategoryRecord.categoryItems.push(theCategoryItem);
+                          
+                          //console.log("LIB/populateEntryCategories newCategoryRecord ", JSON.stringify(newCategoryRecord));
+                      } else
+                          console.log("integrety Error! No category item for currentCategoryKey ", currentCategoryKey)
+                    }         
+
+                });
+            
           } else
               console.log("integrety Error!  No category for currentCategoryName ", currentCategoryName);
 

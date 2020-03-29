@@ -34,3 +34,6 @@ npm install --save express body-parser firebase-functions-helper
 debugging:
 npm run build
 firebase emulators:start
+
+deploy:
+firebase deploy --only functions
